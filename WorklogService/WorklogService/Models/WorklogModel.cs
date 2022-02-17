@@ -9,13 +9,10 @@ namespace WorklogService.Models
 {
     internal class WorklogModel
     {
-        [JsonProperty("author")]
-        public string? UserId { get; }
-        [JsonProperty("authorFullName")]
-        public string? Author { get; }
+        public string UserId { get; }
+        public string Author { get; }
         public DateTime Created { get;}
         public DateTime StartDate { get; }
-        [JsonProperty("author")]
         public int TimeSpent { get; }
 
         public WorklogModel(string userId, string author, long created, long startDate, int timespent)
