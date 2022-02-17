@@ -2,7 +2,7 @@
 
 namespace WorklogService.DataAccess.WorkdayException
 {
-    internal interface IWorkdayExceptionData
+    public interface IWorkdayExceptionData
     {
         IList<WorkdayExceptionModel> GetWorkdayExceptions();
     }

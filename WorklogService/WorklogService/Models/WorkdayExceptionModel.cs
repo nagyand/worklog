@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WorklogService.Models
 {
-    internal class WorkdayExceptionModel
+    public class WorkdayExceptionModel
     {
         public DateTime Date { get; set; }
         public bool IsWork { get; set; }

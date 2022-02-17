@@ -21,4 +21,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WorklogService\WorklogService.csproj" />
+  </ItemGroup>
+
 </Project>

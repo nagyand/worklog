@@ -9,7 +9,7 @@ using WorklogService.Models.Configuration;
 
 namespace WorklogService.DataAccess.WorkdayException
 {
-    internal class WorkdayExceptionData : IWorkdayExceptionData
+    public class WorkdayExceptionData : IWorkdayExceptionData
     {
         private readonly WorkdayExceptionConfiguration _workdayExceptionConfiguration; 
         public WorkdayExceptionData(WorkdayExceptionConfiguration workdayExceptionConfiguration)

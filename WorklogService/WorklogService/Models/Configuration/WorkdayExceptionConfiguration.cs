@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WorklogService.Models.Configuration
 {
-    internal class WorkdayExceptionConfiguration
+    public class WorkdayExceptionConfiguration
     {
         public string FilePath { get; set; }
     }
