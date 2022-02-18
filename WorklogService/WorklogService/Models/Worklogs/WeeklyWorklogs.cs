@@ -1,4 +1,5 @@
 ﻿using WorklogService.Models.Reports;
+using System.Linq;
 
 namespace WorklogService.Models.Worklogs
 {
@@ -17,12 +18,26 @@ namespace WorklogService.Models.Worklogs
 
         public void Add(WorklogModel worklog)
         {
+            _ = worklog ?? throw new ArgumentNullException(nameof(worklog));
             _worklogs.Add(worklog);
         }
 
         public WeeklyReport GetReport()
         {
-            return null;
+            WeeklyReport report = new WeeklyReport
+            {
+                Start = Start,
+                Stop = End,
+                UserPercents = new List<UserPercent>()
+            };
+            report.UserPercents.AddRange(from groupedWorklog in _worklogs.GroupBy(s => s.UserId)
+                                         let precent = groupedWorklog.Sum(s => s.TimeSpent) / ((double)(32 * 3600)) * 100
+                                         select new UserPercent
+                                         {
+                                             UserId = groupedWorklog.Key,
+                                             Percent = Math.Round(precent,2)
+                                         });
+            return report;
         }
     }
 }
