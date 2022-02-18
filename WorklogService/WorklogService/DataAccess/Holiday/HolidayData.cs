@@ -9,7 +9,7 @@ using WorklogService.Models.Configuration;
 
 namespace WorklogService.DataAccess.Holiday
 {
-    internal class HolidayData : IHolidayData
+    public class HolidayData : IHolidayData
     {
         private readonly HolidayConfiguration _configuration;
         public HolidayData(HolidayConfiguration holidayConfiguration)
@@ -21,6 +21,15 @@ namespace WorklogService.DataAccess.Holiday
             string holidaysContent = File.ReadAllText(_configuration.FilePath);
             JObject json = JObject.Parse(holidaysContent);
             return json["holiday"].ToObject<List<HolidayModel>>();
+        }
+
+        public IList<HolidayModel> GetHolidays(string userId)
+        {
+            string holidaysContent = File.ReadAllText(_configuration.FilePath);
+            JObject json = JObject.Parse(holidaysContent);
+            return json["holiday"].ToObject<List<HolidayModel>>()
+                                  .Where(s => s.UserId.Equals(userId, StringComparison.OrdinalIgnoreCase))
+                                  .ToList();
         }
     }
 }

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace WorklogService.Models
 {
-    internal class HolidayModel
+    public class HolidayModel
     {
         [JsonProperty("name")]
         public string UserId { get; set; }
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
     }
 }

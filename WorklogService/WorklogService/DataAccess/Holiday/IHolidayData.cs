@@ -7,8 +7,9 @@ using WorklogService.Models;
 
 namespace WorklogService.DataAccess.Holiday
 {
-    internal interface IHolidayData
+    public interface IHolidayData
     {
         IList<HolidayModel> GetHolidays();
+        IList<HolidayModel> GetHolidays(string userId);
     }
 }
