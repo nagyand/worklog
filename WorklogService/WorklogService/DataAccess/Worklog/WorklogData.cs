@@ -12,11 +12,12 @@ namespace WorklogService.DataAccess
     internal class WorklogData : IWorklogData
     {
         private readonly WorklogConfiguration _configuration;
+        private IList<WorklogModel> _worklogs;
         public WorklogData(WorklogConfiguration configuration)
         {
             _configuration = configuration;
         }
-        public IList<WorklogModel?> GetWorklogs()
+        public IList<WorklogModel> GetWorklogs()
         {
             string worklogContent = File.ReadAllText(_configuration.FilePath);
             JObject json = JObject.Parse(worklogContent);
@@ -30,6 +31,16 @@ namespace WorklogService.DataAccess
                 }
             }
             return worklogs;
+        }
+
+        public IEnumerable<WorklogModel> GetWorklog(string userId)
+        {
+            if (!string.IsNullOrEmpty(userId))
+            {
+                _worklogs ??= GetWorklogs();
+                return _worklogs.Where(s => s.UserId == userId);
+            }
+            throw new ArgumentNullException(nameof(userId));
         }
     }
 }

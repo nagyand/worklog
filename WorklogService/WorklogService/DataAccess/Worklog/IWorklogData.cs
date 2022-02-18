@@ -7,8 +7,9 @@ using WorklogService.Models;
 
 namespace WorklogService.DataAccess
 {
-    internal interface IWorklogData
+    public interface IWorklogData
     {
         IList<WorklogModel> GetWorklogs();
+        IEnumerable<WorklogModel> GetWorklog(string userId);
     }
 }

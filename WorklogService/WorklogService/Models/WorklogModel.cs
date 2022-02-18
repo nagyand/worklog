@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WorklogService.Models
 {
-    internal class WorklogModel
+    public class WorklogModel
     {
         public string UserId { get; }
         public string Author { get; }
