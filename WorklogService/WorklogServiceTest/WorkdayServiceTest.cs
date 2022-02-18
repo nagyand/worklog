@@ -80,5 +80,63 @@ namespace WorklogServiceTest
             //Assert
             Assert.False(result);
         }
+
+        [Fact]
+        public void GetPreviousWorkdayMondayWeekend()
+        {
+            //Arrange
+            WorkdayService workdayService = new WorkdayService(_workdayExceptionMock.Object);
+
+            //Act
+            DateTime result = workdayService.GetPreviousWorkday(new DateTime(2022, 1, 24));
+
+            //Assert
+            Assert.Equal(new DateTime(2022,1,21).Date, result.Date);
+        }
+
+        [Fact]
+        public void GetPreviousWorkdayMondayShortWeekend()
+        {
+            //Arrange
+            Mock<IWorkdayExceptionData> workdayException = new Mock<IWorkdayExceptionData>();
+            workdayException.Setup(s => s.GetWorkdayExceptions())
+                            .Returns(new List<WorkdayExceptionModel> { new WorkdayExceptionModel {Date = new DateTime(2022,2,12), IsWork = true } });
+            WorkdayService workdayService = new WorkdayService(workdayException.Object);
+
+            //Act
+            DateTime result = workdayService.GetPreviousWorkday(new DateTime(2022, 2, 14));
+
+            //Assert
+            Assert.Equal(new DateTime(2022, 2, 12).Date, result.Date);
+        }
+
+        [Fact]
+        public void GetPreviousWorkdayLongWeekend()
+        {
+            //Arrange
+            Mock<IWorkdayExceptionData> workdayException = new Mock<IWorkdayExceptionData>();
+            workdayException.Setup(s => s.GetWorkdayExceptions())
+                            .Returns(new List<WorkdayExceptionModel> { new WorkdayExceptionModel { Date = new DateTime(2022, 2, 14), IsWork = false }, new WorkdayExceptionModel { Date = new DateTime(2022, 2, 15), IsWork = false } });
+            WorkdayService workdayService = new WorkdayService(workdayException.Object);
+
+            //Act
+            DateTime result = workdayService.GetPreviousWorkday(new DateTime(2022, 2, 16));
+
+            //Assert
+            Assert.Equal(new DateTime(2022, 2, 11).Date, result.Date);
+        }
+
+        [Fact]
+        public void GetPreviousWorkdayNormalWeekday()
+        {
+            //Arrange
+            WorkdayService workdayService = new WorkdayService(_workdayExceptionMock.Object);
+
+            //Act
+            DateTime result = workdayService.GetPreviousWorkday(new DateTime(2022, 2, 16));
+
+            //Assert
+            Assert.Equal(new DateTime(2022, 2, 15).Date, result.Date);
+        }
     }
 }

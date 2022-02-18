@@ -26,6 +26,14 @@ namespace WorklogService.Services.Workday
             return !IsWeekend(date);
         }
 
+        public DateTime GetPreviousWorkday(DateTime date)
+        {
+            DateTime previousWorkday = date.AddDays(-1);
+            while (!IsWorkday(previousWorkday))
+                previousWorkday = previousWorkday.AddDays(-1);
+            return previousWorkday;
+        }
+
         private bool IsWeekend(DateTime date) => date.DayOfWeek == DayOfWeek.Sunday || date.DayOfWeek == DayOfWeek.Saturday;
     }
 }
