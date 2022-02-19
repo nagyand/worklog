@@ -13,8 +13,8 @@ namespace WorklogServiceTest
         {
             //Arrange
             DateTime worklogDate = new DateTime(2022, 2, 18);
-            DailyWorklogs dailyWorklogs = new DailyWorklogs(worklogDate);
-            dailyWorklogs.Add((new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 3600), WorklogType.Correct));
+            WorklogModel worklog = new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 3600);
+            DailyWorklogs dailyWorklogs = new DailyWorklogs(worklogDate, worklog, true);
             DailyReport dailyReportExpected = new DailyReport
             {
                 Date = worklogDate,
@@ -39,10 +39,10 @@ namespace WorklogServiceTest
         {
             //Arrange
             DateTime worklogDate = new DateTime(2022, 2, 18);
-            DailyWorklogs dailyWorklogs = new DailyWorklogs(worklogDate);
-            dailyWorklogs.Add((new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 3600), WorklogType.Correct));
-            dailyWorklogs.Add((new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 7200), WorklogType.Correct));
-            dailyWorklogs.Add((new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 1200), WorklogType.Incorrect));
+            WorklogModel worklog = new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 3600);
+            DailyWorklogs dailyWorklogs = new DailyWorklogs(worklogDate, worklog,true);
+            dailyWorklogs.Add((new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 7200), true));
+            dailyWorklogs.Add((new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 1200), false));
             DailyReport dailyReportExpected = new DailyReport
             {
                 Date = worklogDate,
@@ -67,9 +67,9 @@ namespace WorklogServiceTest
         {
             //Arrange
             DateTime worklogDate = new DateTime(2022, 2, 18);
-            DailyWorklogs dailyWorklogs = new DailyWorklogs(worklogDate);
-            dailyWorklogs.Add((new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 3600), WorklogType.Correct));
-            dailyWorklogs.Add((new WorklogModel("user_2", "user_2", 1645185355, 1645178400, 1800), WorklogType.Correct));
+            WorklogModel worklog = new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 3600);
+            DailyWorklogs dailyWorklogs = new DailyWorklogs(worklogDate,worklog,true);
+            dailyWorklogs.Add((new WorklogModel("user_2", "user_2", 1645185355, 1645178400, 1800), true));
             DailyReport dailyReportExpected = new DailyReport
             {
                 Date = worklogDate,
@@ -99,12 +99,12 @@ namespace WorklogServiceTest
         {
             //Arrange
             DateTime worklogDate = new DateTime(2022, 2, 18);
-            DailyWorklogs dailyWorklogs = new DailyWorklogs(worklogDate);
-            dailyWorklogs.Add((new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 3600), WorklogType.Correct));
-            dailyWorklogs.Add((new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 7200), WorklogType.Correct));
-            dailyWorklogs.Add((new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 1200), WorklogType.Incorrect));
-            dailyWorklogs.Add((new WorklogModel("user_2", "user_2", 1645185355, 1645178400, 1800), WorklogType.Correct));
-            dailyWorklogs.Add((new WorklogModel("user_2", "user_2", 1645185355, 1645178400, 1800), WorklogType.Incorrect));
+            WorklogModel worklog = new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 3600);
+            DailyWorklogs dailyWorklogs = new DailyWorklogs(worklogDate, worklog, true);
+            dailyWorklogs.Add((new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 7200), true));
+            dailyWorklogs.Add((new WorklogModel("user_1", "user_1", 1645185355, 1645178400, 1200), false));
+            dailyWorklogs.Add((new WorklogModel("user_2", "user_2", 1645185355, 1645178400, 1800), true));
+            dailyWorklogs.Add((new WorklogModel("user_2", "user_2", 1645185355, 1645178400, 1800), false));
             DailyReport dailyReportExpected = new DailyReport
             {
                 Date = worklogDate,
@@ -134,29 +134,9 @@ namespace WorklogServiceTest
         {
             //Arrange
             DateTime worklogDate = new DateTime(2022, 2, 18);
-            DailyWorklogs dailyWorklogs = new DailyWorklogs(worklogDate);
 
             //Act / Assert
-            Assert.Throws<ArgumentNullException>(() => dailyWorklogs.Add((null, WorklogType.Correct)));
-        }
-
-        [Fact]
-        public void NoWorklogInformationGetReportTest()
-        {
-            //Arrange
-            DateTime worklogDate = new DateTime(2022, 2, 18);
-            DailyWorklogs dailyWorklogs = new DailyWorklogs(worklogDate);
-            DailyReport expectedResult = new DailyReport
-            {
-                Date = worklogDate,
-                UserPercents = new List<UserPercent>()
-            };
-
-            //Act
-            DailyReport report = dailyWorklogs.GetReport();
-
-            //Assert
-            Assert.Equal(expectedResult, report);
+            Assert.Throws<ArgumentNullException>(() => new DailyWorklogs(worklogDate, null, true));
         }
     }
 }

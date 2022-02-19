@@ -8,6 +8,7 @@ namespace WorklogService.Models.Worklogs
         public List<(WorklogModel worklog, bool isCorrenct)> Worklogs { get; }
         public DailyWorklogs(DateTime date,WorklogModel worklog, bool isCorrect)
         {
+            _ = worklog ?? throw new ArgumentNullException(nameof(worklog));
             Date = date;
             Worklogs = new List<(WorklogModel worklog, bool isCorrect)>
             {
