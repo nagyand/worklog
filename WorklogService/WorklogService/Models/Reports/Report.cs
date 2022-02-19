@@ -2,7 +2,7 @@
 {
     public class Report
     {
-        public List<DailyReport> Daily { get; set; }
-        public List<WeeklyReport> Weekly { get; set; }
+        public IEnumerable<DailyReport> Daily { get; set; }
+        public IEnumerable<WeeklyReport> Weekly { get; set; }
     }
 }

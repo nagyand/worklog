@@ -6,7 +6,6 @@ namespace WorklogService.Models.Reports
     {
         public DateTime Date { get; set; }
         public List<UserPercent> UserPercents { get; set; }
-
         public override bool Equals(object obj)
         {
             return obj is DailyReport report &&

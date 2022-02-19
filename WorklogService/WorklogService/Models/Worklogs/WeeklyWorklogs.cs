@@ -6,14 +6,12 @@ namespace WorklogService.Models.Worklogs
     public class WeeklyWorklogs
     {
         public DateTime Start { get; }
-        public DateTime End { get; }
         private List<WorklogModel> _worklogs;
 
-        public WeeklyWorklogs(DateTime start, DateTime end)
+        public WeeklyWorklogs(DateTime start, WorklogModel worklog)
         {
             Start = start;
-            End = end;
-            _worklogs = new List<WorklogModel>();
+            _worklogs = new List<WorklogModel> { worklog };
         }
 
         public void Add(WorklogModel worklog)
@@ -27,7 +25,6 @@ namespace WorklogService.Models.Worklogs
             WeeklyReport report = new WeeklyReport
             {
                 Start = Start,
-                Stop = End,
                 UserPercents = new List<UserPercent>()
             };
             report.UserPercents.AddRange(from groupedWorklog in _worklogs.GroupBy(s => s.UserId)
