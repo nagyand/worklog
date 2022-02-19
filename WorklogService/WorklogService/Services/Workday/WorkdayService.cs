@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WorklogService.DataAccess.WorkdayException;
+﻿using WorklogService.DataAccess.WorkdayException;
 using WorklogService.Models;
 
 namespace WorklogService.Services.Workday
@@ -11,10 +6,12 @@ namespace WorklogService.Services.Workday
     public class WorkdayService : IWorkdayService
     {
         private readonly IWorkdayExceptionData _workdayExceptionData;
+        private readonly IHolidayService _holidayService;
         private IList<WorkdayExceptionModel> _workdayExceptions;
-        public WorkdayService(IWorkdayExceptionData workdayExceptionData)
+        public WorkdayService(IWorkdayExceptionData workdayExceptionData, IHolidayService holidayService)
         {
             _workdayExceptionData = workdayExceptionData;
+            _holidayService = holidayService;
         }
 
         public bool IsWorkday(DateTime date)
@@ -26,10 +23,10 @@ namespace WorklogService.Services.Workday
             return !IsWeekend(date);
         }
 
-        public DateTime GetPreviousWorkday(DateTime date)
+        public DateTime GetUserPreviousWorkday(DateTime date,string userId)
         {
             DateTime previousWorkday = date.AddDays(-1);
-            while (!IsWorkday(previousWorkday))
+            while (!IsWorkday(previousWorkday) || !_holidayService.IsOnHoliday(userId,date))
                 previousWorkday = previousWorkday.AddDays(-1);
             return previousWorkday;
         }
