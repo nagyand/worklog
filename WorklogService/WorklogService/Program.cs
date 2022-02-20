@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using WorklogService.DataAccess;
 using WorklogService.DataAccess.Holiday;
 using WorklogService.DataAccess.Reports;
@@ -14,6 +16,12 @@ using WorklogService.Services.Workday;
 
 var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json")
                                               .Build();
+
+var logger = new LoggerConfiguration()
+                  .MinimumLevel.Debug()
+                  .WriteTo.File("workerservice.log")
+                  .WriteTo.Console()
+                  .CreateLogger();
 
 var serviceProvider = new ServiceCollection()
     .Configure<HolidayConfiguration>(holiday => holiday.FilePath = configuration.GetSection("holiday:filePath").Value)
@@ -29,13 +37,19 @@ var serviceProvider = new ServiceCollection()
     .AddSingleton<IReportHandler, WeeklyReportHandler>()
     .AddSingleton<IReportData, ReportData>()
     .BuildServiceProvider();
-var reporter = new WorklogReport(serviceProvider.GetRequiredService<IWorklogData>(), serviceProvider.GetServices<IReportHandler>());
+var reporter = new WorklogReport(serviceProvider.GetRequiredService<IWorklogData>(), serviceProvider.GetServices<IReportHandler>(), logger);
 try
 {
+    logger.Information("Create report");
     Report report = reporter.CreateReport();
     IReportData reportData = serviceProvider.GetRequiredService<IReportData>();
     reportData.Write(report);
-}catch(Exception e)
+}
+catch (Exception e)
 {
-    Console.WriteLine(e.Message);
+    logger.Error(e.Message);
+}
+finally
+{
+    logger.Information("End service");
 }
