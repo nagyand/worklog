@@ -1,14 +1,13 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using WorklogService.DataAccess;
 using WorklogService.DataAccess.Holiday;
 using WorklogService.DataAccess.Reports;
 using WorklogService.DataAccess.WorkdayException;
+using WorklogService.Handlers.Reports;
 using WorklogService.Models.Configuration;
-using WorklogService.Models.Handler.Reports;
 using WorklogService.Models.Reports;
 using WorklogService.Reporter;
 using WorklogService.Services;

@@ -1,7 +1,7 @@
 ﻿using WorklogService.Models.Reports;
 using WorklogService.Models.Worklogs;
 
-namespace WorklogService.Models.Handler.Reports
+namespace WorklogService.Handlers.Reports
 {
     public interface IReportHandler
     {

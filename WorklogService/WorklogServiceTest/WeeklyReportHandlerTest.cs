@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WorklogService.Models.Handler.Reports;
+using WorklogService.Handlers.Reports;
 using WorklogService.Models.Reports;
 using WorklogService.Models.Worklogs;
 using Xunit;

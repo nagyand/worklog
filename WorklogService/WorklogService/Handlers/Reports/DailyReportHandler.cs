@@ -2,7 +2,7 @@
 using WorklogService.Models.Worklogs;
 using WorklogService.Services.Workday;
 
-namespace WorklogService.Models.Handler.Reports
+namespace WorklogService.Handlers.Reports
 {
     public class DailyReportHandler : IReportHandler
     {

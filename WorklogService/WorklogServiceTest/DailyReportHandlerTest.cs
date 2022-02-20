@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using WorklogService.Models.Handler.Reports;
+using WorklogService.Handlers.Reports;
 using WorklogService.Models.Reports;
 using WorklogService.Models.Worklogs;
 using WorklogService.Services.Workday;

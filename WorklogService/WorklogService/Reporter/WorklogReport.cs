@@ -1,6 +1,6 @@
 ﻿using Serilog;
 using WorklogService.DataAccess;
-using WorklogService.Models.Handler.Reports;
+using WorklogService.Handlers.Reports;
 using WorklogService.Models.Reports;
 
 namespace WorklogService.Reporter
