@@ -26,7 +26,7 @@ namespace WorklogService.Services.Workday
         public DateTime GetUserPreviousWorkday(DateTime date,string userId)
         {
             DateTime previousWorkday = date.AddDays(-1);
-            while (!IsWorkday(previousWorkday) || !_holidayService.IsOnHoliday(userId,date))
+            while (!IsWorkday(previousWorkday) || _holidayService.IsOnHoliday(userId, previousWorkday))
                 previousWorkday = previousWorkday.AddDays(-1);
             return previousWorkday;
         }

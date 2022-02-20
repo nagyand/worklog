@@ -30,7 +30,7 @@ namespace WorklogServiceTest
                 }
             });
             _holidayMock = new Mock<IHolidayService>();
-            _holidayMock.Setup(s => s.IsOnHoliday(It.IsAny<string>(), It.IsAny<DateTime>())).Returns(true);
+            _holidayMock.Setup(s => s.IsOnHoliday(It.IsAny<string>(), It.IsAny<DateTime>())).Returns(false);
         }
         [Fact]
         public void TrueOnNormalWorkday()
@@ -138,6 +138,58 @@ namespace WorklogServiceTest
 
             //Act
             DateTime result = workdayService.GetUserPreviousWorkday(new DateTime(2022, 2, 16),"user_1");
+
+            //Assert
+            Assert.Equal(new DateTime(2022, 2, 15).Date, result.Date);
+        }
+
+        [Fact]
+        public void GetPreviousHolidayForUserLongWeekendWithHoliday()
+        {
+            //Arrange
+            Mock<IWorkdayExceptionData> workdayException = new Mock<IWorkdayExceptionData>();
+            workdayException.Setup(s => s.GetWorkdayExceptions())
+                            .Returns(new List<WorkdayExceptionModel> { new WorkdayExceptionModel { Date = new DateTime(2022, 2, 14), IsWork = false }, new WorkdayExceptionModel { Date = new DateTime(2022, 2, 15), IsWork = false } });
+            _holidayMock.Setup(s => s.IsOnHoliday(It.IsAny<string>(), It.IsAny<DateTime>()))
+                        .Returns((string user, DateTime date) => date.Date == new DateTime(2022, 2, 11).Date);
+            WorkdayService workdayService = new WorkdayService(workdayException.Object, _holidayMock.Object);
+
+            //Act
+            DateTime result = workdayService.GetUserPreviousWorkday(new DateTime(2022, 2, 16), "user_1");
+
+            //Assert
+            Assert.Equal(new DateTime(2022, 2, 10).Date, result.Date);
+        }
+
+        [Fact]
+        public void GetPreviousWorkdayShortWeekendWithHolidayTest()
+        {
+            //Arrange
+            Mock<IWorkdayExceptionData> workdayException = new Mock<IWorkdayExceptionData>();
+            workdayException.Setup(s => s.GetWorkdayExceptions())
+                            .Returns(new List<WorkdayExceptionModel> { new WorkdayExceptionModel { Date = new DateTime(2022, 2, 12), IsWork = true } });
+            _holidayMock.Setup(s => s.IsOnHoliday(It.IsAny<string>(), It.IsAny<DateTime>()))
+                        .Returns((string user, DateTime date) => date.Date == new DateTime(2022, 2, 12).Date);
+            WorkdayService workdayService = new WorkdayService(workdayException.Object, _holidayMock.Object);
+
+            //Act
+            DateTime result = workdayService.GetUserPreviousWorkday(new DateTime(2022, 2, 14), "user_1");
+
+            //Assert
+            Assert.Equal(new DateTime(2022, 2, 11).Date, result.Date);
+        }
+
+        [Fact]
+        public void GetPreviousWorkdayNormalWeeddayWithHolidayTest()
+        {
+            //Arrange
+            Mock<IWorkdayExceptionData> workdayException = new Mock<IWorkdayExceptionData>();
+            _holidayMock.Setup(s => s.IsOnHoliday(It.IsAny<string>(), It.IsAny<DateTime>()))
+                        .Returns((string user, DateTime date) => date.Date == new DateTime(2022, 2, 16).Date);
+            WorkdayService workdayService = new WorkdayService(_workdayExceptionMock.Object, _holidayMock.Object);
+
+            //Act
+            DateTime result = workdayService.GetUserPreviousWorkday(new DateTime(2022, 2, 17), "user_1");
 
             //Assert
             Assert.Equal(new DateTime(2022, 2, 15).Date, result.Date);

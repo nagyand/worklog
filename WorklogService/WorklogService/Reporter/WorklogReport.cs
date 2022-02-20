@@ -18,7 +18,7 @@ namespace WorklogService.Reporter
         public Report CreateReport()
         {
             Report report = new Report();
-            foreach(var worklog in _worklogData.GetWorklogs())
+            foreach (var worklog in _worklogData.GetWorklogs())
             {
                 foreach (var reportHandler in _reportHandlers)
                 {
