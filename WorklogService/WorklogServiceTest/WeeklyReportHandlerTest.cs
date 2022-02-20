@@ -11,9 +11,13 @@ namespace WorklogServiceTest
     public class WeeklyReportHandlerTest
     {
         private readonly WeeklyReportHandler _handler;
+        private readonly long _created;
+        private readonly long _createdOtherWeek;
         public WeeklyReportHandlerTest()
         {
             _handler = new WeeklyReportHandler();
+            _created = new DateTimeOffset(2022,2,15,10,0,0,TimeSpan.Zero).ToUnixTimeMilliseconds();
+            _createdOtherWeek = new DateTimeOffset(2022, 1, 12, 9, 30, 0, TimeSpan.Zero).ToUnixTimeMilliseconds();
         }
         [Fact]
         public void AddNullWorklogToWeeklyHandlerTest()
@@ -45,7 +49,7 @@ namespace WorklogServiceTest
                     }
                 }.AsEnumerable()
             };
-            _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 11520));
+            _handler.Add(new WorklogModel("user_1", "user_1", _created, _created, 11520));
 
             //Act
             _handler.Report(report);
@@ -82,9 +86,9 @@ namespace WorklogServiceTest
             };
 
             //Act
-            _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 11520));
-            _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 23040));
-            _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 3600));
+            _handler.Add(new WorklogModel("user_1", "user_1", _created, _created, 11520));
+            _handler.Add(new WorklogModel("user_1", "user_1", _created, _created, 23040));
+            _handler.Add(new WorklogModel("user_1", "user_1", _created, _created, 3600));
             _handler.Report(report);
 
             //Assert
@@ -122,10 +126,10 @@ namespace WorklogServiceTest
                     }
                 }.AsEnumerable()
             };
-            _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 11520));
-            _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 23040));
-            _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 3600));
-            _handler.Add(new WorklogModel("user_2", "user_2", 1644919200000, 1644919200000, 11520));
+            _handler.Add(new WorklogModel("user_1", "user_1", _created, _created, 11520));
+            _handler.Add(new WorklogModel("user_1", "user_1", _created, _created, 23040));
+            _handler.Add(new WorklogModel("user_1", "user_1", _created, _created, 3600));
+            _handler.Add(new WorklogModel("user_2", "user_2", _created, _created, 11520));
 
             //Act
             _handler.Report(report);
@@ -172,10 +176,10 @@ namespace WorklogServiceTest
                     }
                 }.AsEnumerable()
             };
-            _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 11520));
-            _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 23040));
-            _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 3600));
-            _handler.Add(new WorklogModel("user_1", "user_1", 1641979800000, 1641979800000, 11520));
+            _handler.Add(new WorklogModel("user_1", "user_1", _created, _created, 11520));
+            _handler.Add(new WorklogModel("user_1", "user_1", _created, _created, 23040));
+            _handler.Add(new WorklogModel("user_1", "user_1", _created, _created, 3600));
+            _handler.Add(new WorklogModel("user_1", "user_1", _createdOtherWeek, _createdOtherWeek, 11520));
 
             //Act
             _handler.Report(report);
@@ -230,12 +234,12 @@ namespace WorklogServiceTest
                     }
                 }.AsEnumerable()
             };
-            _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 11520));
-            _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 23040));
-            _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 3600));
-            _handler.Add(new WorklogModel("user_2", "user_2", 1644919200000, 1644919200000, 11520));
-            _handler.Add(new WorklogModel("user_1", "user_1", 1641979800000, 1641979800000, 11520));
-            _handler.Add(new WorklogModel("user_2", "user_2", 1641979800000, 1641979800000, 11520));
+            _handler.Add(new WorklogModel("user_1", "user_1", _created, _created, 11520));
+            _handler.Add(new WorklogModel("user_1", "user_1", _created, _created, 23040));
+            _handler.Add(new WorklogModel("user_1", "user_1", _created, _created, 3600));
+            _handler.Add(new WorklogModel("user_2", "user_2", _created, _created, 11520));
+            _handler.Add(new WorklogModel("user_1", "user_1", _createdOtherWeek, _createdOtherWeek, 11520));
+            _handler.Add(new WorklogModel("user_2", "user_2", _createdOtherWeek, _createdOtherWeek, 11520));
 
             //Act
             _handler.Report(report);
