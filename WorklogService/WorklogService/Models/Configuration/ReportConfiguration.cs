@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace WorklogService.Models.Configuration
 {
-    public class HolidayConfiguration
+    internal class ReportConfiguration
     {
-        public HolidayConfiguration()
-        {
-
-        }
-        public string FilePath { get; set; }
+        public string ReportPath { get; set; }
     }
 }

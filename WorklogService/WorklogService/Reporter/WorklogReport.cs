@@ -9,7 +9,7 @@ namespace WorklogService.Reporter
         private readonly List<IReportHandler> _reportHandlers;
         private readonly IWorklogData _worklogData;
 
-        public WorklogReport(IWorklogData worklogData, IList<IReportHandler> reportHandlers)
+        public WorklogReport(IWorklogData worklogData, IEnumerable<IReportHandler> reportHandlers)
         {
             _worklogData = worklogData;
             _reportHandlers = new List<IReportHandler>(reportHandlers);

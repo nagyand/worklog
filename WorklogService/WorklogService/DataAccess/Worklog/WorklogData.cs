@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 using WorklogService.Models.Configuration;
 using WorklogService.Models.Worklogs;
 
@@ -8,9 +9,9 @@ namespace WorklogService.DataAccess
     {
         private readonly WorklogConfiguration _configuration;
         private IList<WorklogModel> _worklogs;
-        public WorklogData(WorklogConfiguration configuration)
+        public WorklogData(IOptions<WorklogConfiguration> configuration)
         {
-            _configuration = configuration;
+            _configuration = configuration.Value;
         }
         public IList<WorklogModel> GetWorklogs()
         {

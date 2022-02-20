@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace WorklogService.DataAccess.WorkdayException
     public class WorkdayExceptionData : IWorkdayExceptionData
     {
         private readonly WorkdayExceptionConfiguration _workdayExceptionConfiguration; 
-        public WorkdayExceptionData(WorkdayExceptionConfiguration workdayExceptionConfiguration)
+        public WorkdayExceptionData(IOptions<WorkdayExceptionConfiguration> workdayExceptionConfiguration)
         {
-            _workdayExceptionConfiguration = workdayExceptionConfiguration;
+            _workdayExceptionConfiguration = workdayExceptionConfiguration.Value;
         }
         public IList<WorkdayExceptionModel> GetWorkdayExceptions()
         {

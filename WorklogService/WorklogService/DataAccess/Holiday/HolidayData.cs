@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace WorklogService.DataAccess.Holiday
     public class HolidayData : IHolidayData
     {
         private readonly HolidayConfiguration _configuration;
-        public HolidayData(HolidayConfiguration holidayConfiguration)
+        public HolidayData(IOptions<HolidayConfiguration> holidayConfiguration)
         {
-            _configuration = holidayConfiguration;
+            _configuration = holidayConfiguration.Value;
         }
         public IList<HolidayModel> GetHolidays()
         {
