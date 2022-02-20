@@ -10,28 +10,38 @@ namespace WorklogService.Models.Handler.Reports
         private readonly List<DailyWorklogs> _dailyWorklogs;
         public DailyReportHandler(IWorkdayService workdayService)
         {
+            _ = workdayService ?? throw new ArgumentNullException(nameof(workdayService));
             _workdayService = workdayService;
+            _dailyWorklogs = new List<DailyWorklogs>();
         }
         public void Add(WorklogModel worklog)
         {
             _ = worklog ?? throw new ArgumentNullException(nameof(worklog));
             bool isCorrectWorklog = IsCorrectWorklog(worklog);
-            _dailyWorklogs.Add(new DailyWorklogs(worklog.StartDate.Date, worklog, isCorrectWorklog));
+            DailyWorklogs dailyWorklogs = _dailyWorklogs.FirstOrDefault(s => s.Date.Date == worklog.StartDate.Date);
+            if (dailyWorklogs is null)
+            {
+                _dailyWorklogs.Add(new DailyWorklogs(worklog.StartDate.Date, worklog, isCorrectWorklog));
+            }
+            else
+            {
+                dailyWorklogs.Add((worklog, isCorrectWorklog));
+            }
         }
 
         private bool IsCorrectWorklog(WorklogModel worklog)
         {
             if (worklog.StartDate.Date != worklog.Created.Date)
             {
-                if (IsBookingOnPreviousDay(worklog))
+                if (IsCorrectlyBookingOnPreviousDay(worklog))
                     return true;
                 return false;
             }
             return true;
         }
 
-        private bool IsBookingOnPreviousDay(WorklogModel worklog) =>
-            _workdayService.GetUserPreviousWorkday(worklog.Created, worklog.UserId).Date == worklog.StartDate.Date && worklog.Created.Date.Hour < 10;
+        private bool IsCorrectlyBookingOnPreviousDay(WorklogModel worklog) =>
+            _workdayService.GetUserPreviousWorkday(worklog.Created, worklog.UserId).Date == worklog.StartDate.Date && worklog.Created.Hour < 10;
 
         public void Report(Report report)
         {
