@@ -13,7 +13,7 @@ var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json")
 
 var logger = new LoggerConfiguration()
                   .MinimumLevel.Debug()
-                  .WriteTo.File("workerservice.log")
+                  .WriteTo.File("worklogservice.log")
                   .WriteTo.Console()
                   .CreateLogger();
 
