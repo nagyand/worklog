@@ -45,9 +45,9 @@ namespace WorklogServiceTest
                     }
                 }.AsEnumerable()
             };
+            _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 11520));
 
             //Act
-            _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 11520));
             _handler.Report(report);
 
             //Assert
@@ -122,12 +122,12 @@ namespace WorklogServiceTest
                     }
                 }.AsEnumerable()
             };
-
-            //Act
             _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 11520));
             _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 23040));
             _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 3600));
             _handler.Add(new WorklogModel("user_2", "user_2", 1644919200000, 1644919200000, 11520));
+
+            //Act
             _handler.Report(report);
 
             //Assert
@@ -172,12 +172,12 @@ namespace WorklogServiceTest
                     }
                 }.AsEnumerable()
             };
-
-            //Act
             _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 11520));
             _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 23040));
             _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 3600));
             _handler.Add(new WorklogModel("user_1", "user_1", 1641979800000, 1641979800000, 11520));
+
+            //Act
             _handler.Report(report);
 
             //Assert
@@ -230,14 +230,14 @@ namespace WorklogServiceTest
                     }
                 }.AsEnumerable()
             };
-
-            //Act
             _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 11520));
             _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 23040));
             _handler.Add(new WorklogModel("user_1", "user_1", 1644919200000, 1644919200000, 3600));
             _handler.Add(new WorklogModel("user_2", "user_2", 1644919200000, 1644919200000, 11520));
             _handler.Add(new WorklogModel("user_1", "user_1", 1641979800000, 1641979800000, 11520));
             _handler.Add(new WorklogModel("user_2", "user_2", 1641979800000, 1641979800000, 11520));
+
+            //Act
             _handler.Report(report);
 
             //Assert
