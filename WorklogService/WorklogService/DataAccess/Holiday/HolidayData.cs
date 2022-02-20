@@ -1,10 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WorklogService.Models;
 using WorklogService.Models.Configuration;
 
@@ -13,6 +8,7 @@ namespace WorklogService.DataAccess.Holiday
     public class HolidayData : IHolidayData
     {
         private readonly HolidayConfiguration _configuration;
+        private IList<HolidayModel> _holidays;
         public HolidayData(IOptions<HolidayConfiguration> holidayConfiguration)
         {
             _configuration = holidayConfiguration.Value;
@@ -26,11 +22,9 @@ namespace WorklogService.DataAccess.Holiday
 
         public IList<HolidayModel> GetHolidays(string userId)
         {
-            string holidaysContent = File.ReadAllText(_configuration.FilePath);
-            JObject json = JObject.Parse(holidaysContent);
-            return json["holiday"].ToObject<List<HolidayModel>>()
-                                  .Where(s => s.UserId.Equals(userId, StringComparison.OrdinalIgnoreCase))
-                                  .ToList();
+            _holidays ??= GetHolidays();
+            return _holidays.Where(s => s.UserId.Equals(userId, StringComparison.OrdinalIgnoreCase))
+                            .ToList();
         }
     }
 }
