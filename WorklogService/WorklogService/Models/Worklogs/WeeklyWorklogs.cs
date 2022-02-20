@@ -10,6 +10,7 @@ namespace WorklogService.Models.Worklogs
 
         public WeeklyWorklogs(DateTime start, WorklogModel worklog)
         {
+            _ = worklog ?? throw new ArgumentNullException(nameof(worklog));
             Start = start;
             _worklogs = new List<WorklogModel> { worklog };
         }

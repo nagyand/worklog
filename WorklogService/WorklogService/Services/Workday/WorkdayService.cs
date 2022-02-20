@@ -10,6 +10,8 @@ namespace WorklogService.Services.Workday
         private IList<WorkdayExceptionModel> _workdayExceptions;
         public WorkdayService(IWorkdayExceptionData workdayExceptionData, IHolidayService holidayService)
         {
+            _ = workdayExceptionData ?? throw new ArgumentNullException(nameof(workdayExceptionData));
+            _ = holidayService ?? throw new ArgumentNullException(nameof(holidayService));
             _workdayExceptionData = workdayExceptionData;
             _holidayService = holidayService;
         }
