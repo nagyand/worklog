@@ -23,7 +23,7 @@ namespace WorklogService.Reporter
             Report report = new Report();
             foreach (var worklog in _worklogData.GetWorklogs())
             {
-                _logger.Information($"Process worklog: {worklog.StartDate} {worklog.Author}");
+                _logger.Information($"Process worklog: Start date:{worklog.StartDate} Created:{worklog.Created} Author:{worklog.Author}");
                 foreach (var reportHandler in _reportHandlers)
                 {
                     reportHandler.Add(worklog);
