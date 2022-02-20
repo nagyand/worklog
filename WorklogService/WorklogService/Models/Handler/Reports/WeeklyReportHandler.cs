@@ -28,7 +28,7 @@ namespace WorklogService.Models.Handler.Reports
         public void Report(Report report)
         {
             _ = report ?? throw new ArgumentNullException(nameof(report));
-            report.Weekly = _weeklyWorklogs.Select(s => s.GetReport());
+            report.Weekly = _weeklyWorklogs.Select(s => s.GetReport()).OrderBy(s => s.Start);
         }
 
         private DateTime GetFirstDayOfWeek(DateTime date)

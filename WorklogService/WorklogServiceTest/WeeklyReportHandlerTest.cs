@@ -150,18 +150,6 @@ namespace WorklogServiceTest
                 {
                     new WeeklyReport
                     {
-                        Start = new DateTime(2022,2,14),
-                        UserPercents = new List<UserPercent>
-                        {
-                            new UserPercent
-                            {
-                                UserId = "user_1",
-                                Percent = 33.12
-                            }
-                        }
-                    },
-                    new WeeklyReport
-                    {
                         Start = new DateTime(2022,1,10),
                         UserPercents = new List<UserPercent>
                         {
@@ -169,6 +157,18 @@ namespace WorklogServiceTest
                             {
                                 UserId = "user_1",
                                 Percent = 10
+                            }
+                        }
+                    },
+                    new WeeklyReport
+                    {
+                        Start = new DateTime(2022,2,14),
+                        UserPercents = new List<UserPercent>
+                        {
+                            new UserPercent
+                            {
+                                UserId = "user_1",
+                                Percent = 33.12
                             }
                         }
                     }
@@ -198,13 +198,13 @@ namespace WorklogServiceTest
                 {
                     new WeeklyReport
                     {
-                        Start = new DateTime(2022,2,14),
+                        Start = new DateTime(2022,1,10),
                         UserPercents = new List<UserPercent>
                         {
                             new UserPercent
                             {
                                 UserId = "user_1",
-                                Percent = 33.12
+                                Percent = 10
                             },
                             new UserPercent
                             {
@@ -215,13 +215,13 @@ namespace WorklogServiceTest
                     },
                     new WeeklyReport
                     {
-                        Start = new DateTime(2022,1,10),
+                        Start = new DateTime(2022,2,14),
                         UserPercents = new List<UserPercent>
                         {
                             new UserPercent
                             {
                                 UserId = "user_1",
-                                Percent = 10
+                                Percent = 33.12
                             },
                             new UserPercent
                             {

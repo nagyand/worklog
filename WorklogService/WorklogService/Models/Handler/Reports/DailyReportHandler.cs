@@ -46,7 +46,7 @@ namespace WorklogService.Models.Handler.Reports
         public void Report(Report report)
         {
             _ = report ?? throw new ArgumentNullException(); 
-            report.Daily = _dailyWorklogs.Select(s => s.GetReport());
+            report.Daily = _dailyWorklogs.Select(s => s.GetReport()).OrderBy(s => s.Date);
         }
     }
 }
