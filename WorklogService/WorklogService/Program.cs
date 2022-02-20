@@ -1,17 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using WorklogService.DataAccess;
-using WorklogService.DataAccess.Holiday;
 using WorklogService.DataAccess.Reports;
-using WorklogService.DataAccess.WorkdayException;
+using WorklogService.Extensions;
 using WorklogService.Handlers.Reports;
-using WorklogService.Models.Configuration;
 using WorklogService.Models.Reports;
 using WorklogService.Reporter;
-using WorklogService.Services;
-using WorklogService.Services.Workday;
 
 var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json")
                                               .Build();
@@ -23,20 +18,11 @@ var logger = new LoggerConfiguration()
                   .CreateLogger();
 
 var serviceProvider = new ServiceCollection()
-    .Configure<HolidayConfiguration>(holiday => holiday.FilePath = configuration.GetSection("holiday:filePath").Value)
-    .Configure<ReportConfiguration>(report => report.ReportPath = configuration.GetSection("report:filePath").Value)
-    .Configure<WorklogConfiguration>(worklog => worklog.FilePath = configuration.GetSection("worklog:filePath").Value)
-    .Configure<WorkdayExceptionConfiguration>(workday => workday.FilePath = configuration.GetSection("holiday:filePath").Value)
-    .AddSingleton<IHolidayData, HolidayData>()
-    .AddSingleton<IWorkdayExceptionData, WorkdayExceptionData>()
-    .AddSingleton<IWorklogData, WorklogData>()
-    .AddSingleton<IHolidayService, HolidayService>()
-    .AddSingleton<IWorkdayService, WorkdayService>()
-    .AddSingleton<IReportHandler, DailyReportHandler>()
-    .AddSingleton<IReportHandler, WeeklyReportHandler>()
-    .AddSingleton<IReportData, ReportData>()
-    .BuildServiceProvider();
-var reporter = new WorklogReport(serviceProvider.GetRequiredService<IWorklogData>(), serviceProvider.GetServices<IReportHandler>(), logger);
+                        .AddConfiguration(configuration)
+                        .AddServices()
+                        .BuildServiceProvider();
+
+WorklogReport reporter = new WorklogReport(serviceProvider.GetRequiredService<IWorklogData>(), serviceProvider.GetServices<IReportHandler>(), logger);
 try
 {
     logger.Information("Create report");
