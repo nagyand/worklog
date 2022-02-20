@@ -1,0 +1,26 @@
+{
+  "holiday": [
+    {
+      "name": "user-1",
+      "date": "2021-11-28"
+    },
+    {
+      "name": "user-2",
+      "date": "2021-11-29"
+    },
+    {
+      "name": "user-2",
+      "date": "2021-11-30"
+    }
+  ],
+  "workdayexceptions": [
+    {
+      "date": "2021-12-24",
+      "iswork": false
+    },
+    {
+      "date": "2021-12-11",
+      "iswork": true
+    }
+  ]
+}
