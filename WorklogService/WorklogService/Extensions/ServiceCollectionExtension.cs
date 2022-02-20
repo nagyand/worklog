@@ -25,13 +25,13 @@ namespace WorklogService.Extensions
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddSingleton<IHolidayData, HolidayData>()
-                   .AddSingleton<IWorkdayExceptionData, WorkdayExceptionData>()
-                   .AddSingleton<IWorklogData, WorklogData>()
-                   .AddSingleton<IHolidayService, HolidayService>()
-                   .AddSingleton<IWorkdayService, WorkdayService>()
-                   .AddSingleton<IReportHandler, DailyReportHandler>()
-                   .AddSingleton<IReportHandler, WeeklyReportHandler>()
-                   .AddSingleton<IReportData, ReportData>();
+                    .AddSingleton<IWorkdayExceptionData, WorkdayExceptionData>()
+                    .AddSingleton<IWorklogData, WorklogData>()
+                    .AddSingleton<IHolidayService, HolidayService>()
+                    .AddSingleton<IWorkdayService, WorkdayService>()
+                    .AddSingleton<IReportHandler, DailyReportHandler>()
+                    .AddSingleton<IReportHandler, WeeklyReportHandler>()
+                    .AddSingleton<IReportData, ReportData>();
             return services;
         }
     }
