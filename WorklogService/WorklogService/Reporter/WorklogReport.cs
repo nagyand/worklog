@@ -13,6 +13,8 @@ namespace WorklogService.Reporter
 
         public WorklogReport(IWorklogData worklogData, IEnumerable<IReportHandler> reportHandlers, ILogger logger)
         {
+            _ = worklogData ?? throw new ArgumentNullException(nameof(worklogData));
+            _ = logger ?? throw new ArgumentNullException(nameof(logger));
             _worklogData = worklogData;
             _reportHandlers = new List<IReportHandler>(reportHandlers);
             _logger = logger;
