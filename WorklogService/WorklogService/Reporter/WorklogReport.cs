@@ -5,7 +5,7 @@ using WorklogService.Models.Reports;
 
 namespace WorklogService.Reporter
 {
-    public class WorklogReport
+    public class WorklogReport : IWorklogReport
     {
         private readonly List<IReportHandler> _reportHandlers;
         private readonly IWorklogData _worklogData;
