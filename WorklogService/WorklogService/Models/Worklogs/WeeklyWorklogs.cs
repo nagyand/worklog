@@ -1,5 +1,4 @@
 ﻿using WorklogService.Models.Reports;
-using System.Linq;
 
 namespace WorklogService.Models.Worklogs
 {
